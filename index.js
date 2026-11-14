@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 const userModel = require('./models/usermodel');
 const foodModel = require('./models/foodModel');
 const trackModel = require('./models/trackModel');
+require('dotenv').config();
 // Creating A Server
 const app = express();
+
 // To get the data from client or user
 app.use(express.json());
 
@@ -151,13 +153,13 @@ app.get("/gettrackfoods/:id/:date",middleware,(req,res)=>{
 })
 
 //Connecting To Database
-mongoose.connect("mongodb://localhost:27017/Fitbit")
+mongoose.connect(process.env.mongo_URI)
     .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log(err));
 
 // Assigning a Port Number
-app.listen(8000, '0.0.0.0', () => {
-    console.log("Server is running on port 8000");
+app.listen(process.env.port || 8000, '0.0.0.0', () => {
+    console.log(`Server is running on port ${process.env.port}`);
 })
 
 
